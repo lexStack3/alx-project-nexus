@@ -1,7 +1,6 @@
 # E-Commerce Backend Capstone Project <br> (ProDev Backend Engineering)
 FastYums is a role-based, multi-vendor **E-Commerce backend system** built as part of **Project Nexus**, the capstone project for the **ProDev Backend Engineering Program**. The project demonstrates the design and implementation of a real-world backend application using Django and Django REST Framework, with a strong focus on scalability, security, database efficiency, and API best practices.
-FastYums models a **food-odering marketplace**, where food items act as products, eatries act as vendors, and delivery partners handle fulfillment. While domain-specific, the system follows standard e-commerce backend architecture, making it directly aligned with the program's E-Commerce Backend requirements.
-
+[Read More...]("https://docs.google.com/document/d/1pi-CmkaLidQ-opmqMgSXov6bgMxKdVPXkILOS_m_0Xw/edit?usp=sharing")
 ## Project Objectives
 This project was built to satisfy the core objectives of Project Nexus:
 - Apply backend technologies to real-world e-commerce problem
