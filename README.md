@@ -1,107 +1,154 @@
-# E-Commerce Backend Capstone Project <br> (ProDev Backend Engineering)
-FastYums is a role-based, multi-vendor **E-Commerce backend system** built as part of **Project Nexus**, the capstone project for the **ProDev Backend Engineering Program**. The project demonstrates the design and implementation of a real-world backend application using Django and Django REST Framework, with a strong focus on scalability, security, database efficiency, and API best practices.
-[Read More...](https://docs.google.com/document/d/1pi-CmkaLidQ-opmqMgSXov6bgMxKdVPXkILOS_m_0Xw/edit?usp=sharing)
-## Project Objectives
-This project was built to satisfy the core objectives of Project Nexus:
-- Apply backend technologies to real-world e-commerce problem
-- Design and implement scalable RESTful APIs
-- Demonstrate strong database modeling and optimization skills
-- Implement secure authentication and role-based authorization
-- Produce clear documentation and a deployable backend system
+# [FastYums – E-Commerce Backend Capstone Project](https://docs.google.com/document/d/1pi-CmkaLidQ-opmqMgSXov6bgMxKdVPXkILOS_m_0Xw/edit?usp=sharing)
+(ProDev Backend Engineering | Project Nexus)
 
-## E-Commerce Features Implemented
-#### 1. User Authentication and Authorization
+FastYums is a role-based, multi-vendor **E-Commerce backend system** developed as part of **Project Nexus**, the graduation capstone for the **ProDev Backend Engineering Program**.  
+The project demonstrates the design and implementation of a real-world backend application using **Django** and **Django REST Framework**, with strong emphasis on scalability, security, database efficiency, and REST API best practices.
+
+---
+
+## Project Objectives
+This project was built to fulfill the core objectives of Project Nexus:
+- Apply backend engineering skills to a real-world e-commerce problem
+- Design and implement scalable RESTful APIs
+- Demonstrate strong database modeling and optimization
+- Implement secure authentication and role-based authorization
+- Deliver clear documentation and a deployable backend system
+
+---
+
+## Core E-Commerce Features
+
+### 1. Authentication & Authorization
 - JWT-based authentication using **SimpleJWT**
 - Role-based access control:
   - `CUSTOMER`
   - `VENDOR`
   - `COURIER`
   - `ADMIN`
-- Secure access to resources based on ownership and role
-#### 2. Product and Category Management (CRUD)
-- Full CRUD APIs for product (meals)
-- Category management for organizing products
+- Custom permission classes enforcing role and resource ownership
+
+### 2. Product & Category Management
+- Full CRUD APIs for products and categories
 - Vendors can only manage their own products
-- Product availability control (in stock / out of stock)
-#### 3. Product Discovery
-- Search products by name and description
-- Filter products by category
-- Sort products by price (ascending / descending)
-- Paginated API response for large datasets
-#### 4. Order Management (Transactional E-Commerce Flow)
-- Server-side order creation with price calculation
-- Order lifecycle management:
+- Product availability and stock control
+
+### 3. Product Discovery
+- Search by product name and description
+- Filter by category
+- Sort by price (ascending / descending)
+- Paginated API responses for large datasets
+
+### 4. Order Management (Transactional Flow)
+- Server-side order creation with atomic price calculation
+- Order lifecycle:
   - `PLACED` → `ACCEPTED` → `READY_FOR_PICKUP` → `ASSIGNED` → `OUT_FOR_DELIVERY` → `DELIVERED` / `CANCELLED`
-- Atomic order creation to ensure data consistency
-#### 5. Delivery & Fulfillment
+- Transaction-safe operations to ensure consistency
+
+### 5. Delivery & Fulfillment
 - Courier registration and availability tracking
 - Delivery assignment workflow
-- Transaction-safe courier acceptance to prevent race conditions
-- Delivery status updates managed by assigned courier
-#### 6. Notifications System
-- In-app notification system backed by the database
-- Notifications triggered by order and delivery status changes
-- Users can retrieve and mark notifications as read via REST APIs
+- Race-condition prevention during courier acceptance
+- Courier-managed delivery status updates
 
-## Database Design and Optimization
-- Relational database schema designed using **MySQL**
-- Proper normalization and use of foreign keys
+### 6. Notification System
+- Database-backed in-app notifications
+- Notifications triggered by order and delivery state changes
+- REST endpoints for retrieval and read-status updates
+
+---
+
+## Database Design & ERD
+- Relational schema designed using **MySQL**
+- Proper normalization and foreign key constraints
 - Indexed fields for performance optimization:
-  - Product (category, availability)
-  - Order (status)
-  - DeliveryAssignment (status)
-- Efficient querying with Django ORM
+- Product (category, availability)
+- Order (status)
+- DeliveryAssignment (status)
+- Entity Relationship Diagram (ERD) designed and shared separately for mentor review
+
+---
+
+## API Surface (Sample Endpoints)
+
+**Authentication**
+- `POST /api/v1/auth/register/`
+- `POST /api/v1/auth/login/`
+
+**Products**
+- `GET /api/v1/products/`
+- `POST /api/v1/products/`
+- `GET /api/v1/products/{id}/`
+- `PUT /api/v1/products/{id}/`
+- `DELETE /api/v1/products/{id}/`
+
+**Orders**
+- `POST /api/v1/orders/`
+- `GET /api/v1/orders/{id}/`
+- `PATCH /api/v1/orders/{id}/`
+
+**Delivery**
+- `POST /api/v1/orders/{id}/assign-delivery/`
+- `POST /api/v1/delivery/{assignment_id}/accept/`
+
+---
 
 ## Security Considerations
-- JWT authentication with access and refresh tokens
-- Custom permission classes enforcing role-based access
-- Resource ownership validation (users access only their data)
-- Minimal exposure of sensitive courier information
+- JWT authentication with refresh tokens
+- Custom role-based permission classes
+- Ownership checks for all protected resources
+- Minimal exposure of courier-sensitive data
 - Environment-based configuration for secrets
 
-## Testing Strategy
-- Unit tests for models, serializers, and permission classes
-- API tests for authentication, product CRUD, and order flows
-- Integration tests covering end-to-end e-commerce scenarios
-- Edge case handling (unauthorized access, unavailable product)
+---
 
-## API Documentation
-- Interactive API documentation using **Swagger/OpenAPI**
-- Postman collection available for API testing and demonstration
-- All endpoints follow RESTful conventions and HTTP standards
+## Testing Strategy
+- Unit tests for models, serializers, and permissions
+- API tests for authentication, product CRUD, and order flows
+- Integration tests covering end-to-end scenarios
+- Edge case handling (unauthorized access, unavailable items)
+
+---
 
 ## Deployment
-- Deploy on **PythonAnywhere**
-- Production configuration include:
-  - Gunicorn WSGI server
-  - Static file handling
-  - Environment-based settings
-- Live API supports full order placement and delivery workflow
+- Deployed on **PythonAnywhere**
+- Production setup includes:
+- Gunicorn WSGI server
+- Static file handling
+- Environment-based settings
+- Live backend supports full order and delivery workflows
 
-## Repository Structure (High-Level)
-- `accounts/` - authentication, user, roles
-- `vendors/` - vendor onboarding and profiles
-- `products/` - products and categories
-- `orders/` - order and order item management
-- `delivery/` - courier and delivery assignments
-- `notifications/` - in-app notification system
+---
 
-## Future Improvements (Post-Capstone)
-- Background tasks with Celery and RabbitMQ
-- Real payment gateway integration (Paystack / Stripe)
+## Repository Structure
+- `accounts/` – users, authentication, roles
+- `vendors/` – vendor profiles
+- `products/` – products and categories
+- `orders/` – orders and order items
+- `delivery/` – courier and delivery assignments
+- `notifications/` – in-app notifications
+
+---
+
+## Future Improvements
+- Background tasks with Celery & RabbitMQ
+- Payment gateway integration (Paystack / Stripe)
 - Real-time notifications using WebSockets
 - Dockerized deployment
-- CI/CD pipelines using GitHub Actions
+- CI/CD pipelines with GitHub Actions
 
-## Project Nexus Compliance Summary
-✔ RESTful E-Commerce APIs implemented<br>
-✔ JWT authentication and authorization<br>
-✔ Filtering, sorting, and pagination supported<br>
-✔ Optimized relational database schema<br>
-✔ API documentation provided<br>
-✔ Deployed backend application
+---
+
+## Project Nexus Compliance
+✔ RESTful E-Commerce APIs  
+✔ JWT authentication & RBAC  
+✔ Filtering, sorting, pagination  
+✔ Optimized relational database  
+✔ API documentation  
+✔ Deployed backend application  
+
+---
 
 ## Author
-**Alexander Edim**
-<br>ProDev Backend Engiheering Learner
-<br>Project Nexus - Graduation Capstone
+**Alexander Edim**  
+ProDev Backend Engineering Learner  
+Project Nexus – Graduation Capstone
