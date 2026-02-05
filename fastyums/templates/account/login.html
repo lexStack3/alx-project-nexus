@@ -1,0 +1,19 @@
+{% load socialaccount %}
+
+<h2>Login</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>
+<p>
+    <a href="{% url 'account_signup' %}">Register</a> |
+    <a href="{% url 'account_reset_password' %}">Forgot password?</a>
+</p>
+
+{% if socialaccount_providers %}
+    <h3>Or login with:</h3>
+    {% for provider in socialaccount_providers %}
+        <a href="{% provider_login_url provider.id %}">{{ provider.name }}</a>
+    {% endfor %}
+{% endif %}
