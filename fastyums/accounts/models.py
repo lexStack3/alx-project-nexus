@@ -31,7 +31,7 @@ class User(AbstractUser, BaseModel):
         ADMIN = 'ADM', 'Admin'
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELD = ['username']
+    REQUIRED_FIELDS = ['username']
 
     user_id = models.UUIDField(
         primary_key=True,
@@ -41,9 +41,10 @@ class User(AbstractUser, BaseModel):
     role = models.CharField(
         max_length=3,
         choices=Roles.choices,
-        default=ROles.CUSTOMER
+        default=Roles.CUSTOMER
     )
-    phone_number = models.CharField(max_length=15, blank=False, unique-True)
+    phone_number = models.CharField(max_length=15, blank=False, unique=True)
+    email = models.CharField(max_length=128, blank=False, unique=True)
 
     class Meta:
         indexes = [
@@ -53,7 +54,8 @@ class User(AbstractUser, BaseModel):
             )
         ]
         constraints = [
-            models.UniqueConstraints(
-                fields=['email', 'phone_number']
+            models.UniqueConstraint(
+                fields=['email', 'phone_number'],
+                name='%(app_label)s_%(class)s_unique_email_phone_number'
             )
         ]
