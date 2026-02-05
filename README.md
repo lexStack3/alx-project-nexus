@@ -64,7 +64,7 @@ This project was built to fulfill the core objectives of Project Nexus:
 - Product (category, availability)
 - Order (status)
 - DeliveryAssignment (status)
-- Entity Relationship Diagram (ERD) designed and shared separately for mentor review
+- [Entity Relationship Diagram](https://docs.google.com/document/d/1OZl5Solm--XdR3f9Q3SF3EhSFMMvnavmz2Astp82rrI/edit?usp=drive_link) (ERD) designed and shared separately for mentor review
 
 ---
 
