@@ -59,3 +59,7 @@ class User(AbstractUser, BaseModel):
                 name='%(app_label)s_%(class)s_unique_email_phone_number'
             )
         ]
+
+    def __str__(self):
+        """A string representation of a <User> instance."""
+        return self.username
