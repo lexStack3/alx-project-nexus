@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local Applications
-    'account',
+    #'accounts',
 ]
 
 MIDDLEWARE = [
@@ -119,4 +119,4 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-AUTH_USER_MODEL = 'account.User'
+#AUTH_USER_MODEL = 'accounts.User'
