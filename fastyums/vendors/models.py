@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -11,6 +12,11 @@ class Vendor(BaseModel):
     """
     A model representation of a <Vendor> instance.
     """
+    vendor_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     owner = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
