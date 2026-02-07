@@ -43,8 +43,17 @@ class User(AbstractUser, BaseModel):
         choices=Roles.choices,
         default=Roles.CUSTOMER
     )
-    phone_number = models.CharField(max_length=15, blank=False, unique=True)
-    email = models.CharField(max_length=128, blank=False, unique=True)
+    phone = models.CharField(
+        max_length=15,
+        blank=True,
+        null=True,
+        unique=True
+    )
+    email = models.CharField(
+        max_length=128,
+        blank=False,
+        unique=True
+    )
 
     class Meta:
         indexes = [
@@ -55,11 +64,16 @@ class User(AbstractUser, BaseModel):
         ]
         constraints = [
             models.UniqueConstraint(
-                fields=['email', 'phone_number'],
-                name='%(app_label)s_%(class)s_unique_email_phone_number'
+                fields=['email', 'phone'],
+                name='%(app_label)s_%(class)s_unique_email_phone'
             )
         ]
 
     def __str__(self):
         """A string representation of a <User> instance."""
         return self.username
+
+    @property
+    def get_full_name(self):
+        """Returns the full name of a <User> instance."""
+        return f"{self.first_name} {self.last_name}"
