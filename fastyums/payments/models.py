@@ -17,26 +17,19 @@ class Payment(BaseModel):
 
 
     payment_id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
+        primary_key=True, default=uuid.uuid4, editable=False
     )
     order = models.ForeignKey(
-        Order,
-        on_delete=models.CASCADE,
-        related_name='payment'
+        Order, on_delete=models.CASCADE, related_name='payment'
     )
     tx_ref = models.CharField(max_length=255, unique=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(
-        max_length=4,
-        choices=PaymentStatus.choices,
+        max_length=4, choices=PaymentStatus.choices,
         default=PaymentStatus.PENDING
     )
     chapa_tranasction_id = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True
+        max_length=255, blank=True, null=True
     )
 
     def __str__(self):
