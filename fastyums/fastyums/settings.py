@@ -195,6 +195,7 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'SCOPE': [
             'user',
+            'email',
             'repo',
             'read:org'
         ]
