@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # Local Applications
     'core',
     'accounts',
+    'vendors',
 
     # allauth authentication library
     'allauth',
