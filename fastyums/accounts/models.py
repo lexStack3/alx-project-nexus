@@ -1,9 +1,14 @@
 import uuid
+import pycountry
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from core.models import BaseModel
+
+
+STATES = tuple((state.code, state.name) for state in
+               pycountry.subdivisions.get(country_code='NG'))
 
 
 class User(AbstractUser, BaseModel):
@@ -19,25 +24,16 @@ class User(AbstractUser, BaseModel):
     REQUIRED_FIELDS = ['username']
 
     user_id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
+        primary_key=True, default=uuid.uuid4, editable=False
     )
     role = models.CharField(
-        max_length=3,
-        choices=Roles.choices,
-        default=Roles.CUSTOMER
+        max_length=3, choices=Roles.choices, default=Roles.CUSTOMER
     )
     phone = models.CharField(
-        max_length=15,
-        blank=True,
-        null=True,
-        unique=True
+        max_length=15, blank=True, null=True, unique=True
     )
     email = models.CharField(
-        max_length=128,
-        blank=False,
-        unique=True
+        max_length=128, blank=False, unique=True
     )
 
     class Meta:
@@ -62,3 +58,36 @@ class User(AbstractUser, BaseModel):
     def get_full_name(self):
         """Returns the full name of a <User> instance."""
         return f"{self.first_name} {self.last_name}"
+
+
+class Address(BaseModel):
+    """
+    A model representation of a <Address> instance.
+    """
+    name = models.CharField(
+        max_length=128, blank=True, default=''
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='addresses'
+    )
+    street = models.CharField(max_length=255, blank=False)
+    city = models.CharField(max_length=128, blank=False)
+    state = models.CharField(
+        max_length=50, choices=STATES, default='NG-CR', blank=False
+    )
+    country = models.CharField(
+        max_length=10, default='Nigeria', editable=False
+    )
+
+    is_default = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-is_default', '-created_at']
+
+    def __str__(self):
+        return "{}, {} - {}, {}".format(
+                    self.street,
+                    self.city,
+                    self.state,
+                    self.country
+                )
