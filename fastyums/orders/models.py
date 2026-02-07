@@ -22,23 +22,18 @@ class Order(BaseModel):
 
 
     order_id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
+        primary_key=True, default=uuid.uuid4, editable=False
     )
     user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='orders'
+        User, on_delete=models.CASCADE, related_name='orders'
     )
     status = models.CharField(
-        max_length=4,
-        choices=Status.choices,
-        default=Status.PENDING
+        max_length=4, choices=Status.choices, default=Status.PENDING
     )
     total_price = models.DecimalField(
         max_digits=8, decimal_places=2
     )
+    address = models.JSONField()
 
     def __str__(self):
         """
@@ -52,18 +47,13 @@ class OrderItem(BaseModel):
     A model representation of an <OrderItem> instance.
     """
     orderItem_id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
+        primary_key=True, default=uuid.uuid4, editable=False
     )
     order = models.ForeignKey(
-        Order,
-        on_delete=models.CASCADE,
-        related_name='items'
+        Order, on_delete=models.CASCADE, related_name='items'
     )
     product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
+        Product, on_delete=models.CASCADE,
     )
     quantity = models.PositiveIntegerField()
     price_at_purchase = models.DecimalField(
