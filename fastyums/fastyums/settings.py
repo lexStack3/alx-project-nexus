@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'core',
     'accounts',
     'vendors',
+    'categories',
 
     # allauth authentication library
     'allauth',
