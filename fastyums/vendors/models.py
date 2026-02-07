@@ -13,9 +13,7 @@ class Vendor(BaseModel):
     A model representation of a <Vendor> instance.
     """
     vendor_id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
+        primary_key=True, default=uuid.uuid4, editable=False
     )
     owner = models.OneToOneField(
         User,
