@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'categories',
     'orders',
     'payments',
+    'courier',
 
     # allauth authentication library
     'allauth',
