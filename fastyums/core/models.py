@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class BaseModel(models.Model):
     """
     An abstract base model to be inherited by other models for common fields:
