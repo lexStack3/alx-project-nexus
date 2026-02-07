@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local Applications
+    'core',
     'accounts',
 
     # allauth authentication library
