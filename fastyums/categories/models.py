@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 
 from core.models import BaseModel
-from vendor.models import Vendor
+from vendors.models import Vendor
 
 
 class Category(BaseModel):
@@ -45,7 +45,7 @@ class Product(BaseModel):
     )
     name = models.CharField(max_length=128, blank=False)
     price = models.DecimalField(
-        max_digits=8
+        max_digits=8,
         decimal_places=2,
         default=0.00
     )
