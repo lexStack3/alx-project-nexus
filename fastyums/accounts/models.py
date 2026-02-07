@@ -3,22 +3,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-
-class BaseModel(models.Model):
-    """
-    An abstract base model to be inherited by other models for common fields:
-    -   created_at
-    -   updated_at
-    """
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def get_absolute_url(self):
-        pass
-
-    class Meta:
-        abstract = True
-        ordering = ['-created_at']
+from core.models import BaseModel
 
 
 class User(AbstractUser, BaseModel):
