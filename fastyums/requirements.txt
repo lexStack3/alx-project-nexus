@@ -5,7 +5,9 @@ charset-normalizer==3.4.4
 cryptography==46.0.4
 Django==6.0.1
 django-allauth==65.14.0
+django-cors-headers==4.9.0
 django-environ==0.12.0
+django-extensions==4.1
 djangorestframework==3.16.1
 drf-yasg==1.21.14
 idna==3.11
