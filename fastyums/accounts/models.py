@@ -73,9 +73,6 @@ class Address(BaseModel):
     name = models.CharField(
         max_length=128, blank=True, default=''
     )
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='addresses'
-    )
     street = models.CharField(max_length=255, blank=False)
     city = models.CharField(max_length=128, blank=False)
     state = models.CharField(
