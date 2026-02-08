@@ -3,6 +3,11 @@ import pycountry
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import (
+    GenericForeignKey,
+    GenericRelation
+)
 
 from core.models import BaseModel
 
@@ -35,6 +40,7 @@ class User(AbstractUser, BaseModel):
     email = models.CharField(
         max_length=128, blank=False, unique=True
     )
+    addresses = GenericRelation("Address")
 
     class Meta:
         indexes = [
@@ -81,8 +87,16 @@ class Address(BaseModel):
 
     is_default = models.BooleanField(default=False)
 
+    # GenericForeignKey
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.UUIDField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
     class Meta:
         ordering = ['-is_default', '-created_at']
+        indexes = [
+            models.Index(fields=['content_type', 'object_id']),
+        ]
 
     def __str__(self):
         return "{}, {} - {}, {}".format(
