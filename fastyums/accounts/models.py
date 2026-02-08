@@ -70,6 +70,9 @@ class Address(BaseModel):
     """
     A model representation of a <Address> instance.
     """
+    address_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False
+    )
     name = models.CharField(
         max_length=128, blank=True, default=''
     )
@@ -109,3 +112,16 @@ class Address(BaseModel):
                     self.state,
                     self.country
                 )
+
+    @property
+    def to_dict(self):
+        """
+        Returns a dictionary of all the key-value pairs in the <Address> instance.
+        """
+        return {
+            'name': self.name,
+            'street': self.street,
+            'city': self.city,
+            'state': self.state,
+            'country': self.country
+        }
