@@ -6,7 +6,7 @@ from .models import User, Address
 class AddressInline(GenericTabularInline):
     model = Address
     extra = 1
-    fields = ['name', 'user', 'street', 'city', 'state', 'is_default']
+    fields = ['name', 'street', 'city', 'state', 'is_default']
 
 
 @admin.register(User)
@@ -20,7 +20,7 @@ class UserAdmin(admin.ModelAdmin):
     @admin.display(description='City')
     def get_city(self, obj):
         # Fetch teh default address, or the first one available
-        address = obj.addresses.filter(is_default=True).first() or obj.address.first()
+        address = obj.addresses.filter(is_default=True).first() or obj.addresses.first()
         return address.city if address else '-'
 
 
