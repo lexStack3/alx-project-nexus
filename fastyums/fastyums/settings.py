@@ -65,8 +65,9 @@ INSTALLED_APPS = [
     # django-restframework
     'rest_framework',
 
-    # django-cors-headers
+    # Other third-party libraries
     'corsheaders',
+    'django_extensions',
 ]
 
 SITE_ID = 1
