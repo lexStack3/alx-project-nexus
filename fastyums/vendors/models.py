@@ -1,8 +1,10 @@
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.fields import GenericRelation
 
 from core.models import BaseModel
+from accounts.models import Address
 
 
 User = get_user_model()
@@ -23,6 +25,7 @@ class Vendor(BaseModel):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
+    addresses = GenericRelation(Address)
 
     def __str__(self):
         """
