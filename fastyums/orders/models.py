@@ -46,7 +46,7 @@ class OrderItem(BaseModel):
     """
     A model representation of an <OrderItem> instance.
     """
-    orderItem_id = models.UUIDField(
+    item_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False
     )
     order = models.ForeignKey(
