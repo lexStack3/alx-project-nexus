@@ -24,7 +24,6 @@ class Vendor(BaseModel):
     )
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    is_active = models.BooleanField(default=True)
     addresses = GenericRelation(Address)
 
     def __str__(self):
