@@ -53,13 +53,17 @@ INSTALLED_APPS = [
     'orders',
     'payments',
     'courier',
+    'api',
 
     # allauth authentication library
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github'
+    'allauth.socialaccount.providers.github',
+
+    # django-restframework
+    'rest_framework',
 ]
 
 SITE_ID = 1
