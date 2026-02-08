@@ -97,6 +97,13 @@ class Address(BaseModel):
         indexes = [
             models.Index(fields=['content_type', 'object_id']),
         ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['content_type', 'object_id'],
+                condition=models.Q(is_default=True),
+                name='unique_default_address_per_owner'
+            )
+        ]
 
     def __str__(self):
         return "{}, {} - {}, {}".format(
