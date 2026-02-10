@@ -43,4 +43,4 @@ class Payment(BaseModel):
         """
         String representation of a <Payment> instance.
         """
-        return f"Payment for {self.tx_ref} - {self.status}"
+        return f"Payment: {self.tx_ref} - {self.status}"
