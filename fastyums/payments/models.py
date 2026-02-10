@@ -1,8 +1,12 @@
 import uuid
 from django.db import models
+from django.contrib.auth import get_user_model
 
 from core.models import BaseModel
 from orders.models import Order
+
+
+User = get_user_model()
 
 
 class Payment(BaseModel):
@@ -19,7 +23,10 @@ class Payment(BaseModel):
     payment_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False
     )
-    order = models.ForeignKey(
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='payments'
+    )
+    order = models.OneToOneField(
         Order, on_delete=models.CASCADE, related_name='payment'
     )
     tx_ref = models.CharField(max_length=255, unique=True)
@@ -28,7 +35,7 @@ class Payment(BaseModel):
         max_length=4, choices=PaymentStatus.choices,
         default=PaymentStatus.PENDING
     )
-    chapa_tranasction_id = models.CharField(
+    chapa_transaction_id = models.CharField(
         max_length=255, blank=True, null=True
     )
 
