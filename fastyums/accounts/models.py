@@ -61,9 +61,13 @@ class User(AbstractUser, BaseModel):
         return self.username
 
     @property
-    def get_full_name(self):
+    def full_name(self):
         """Returns the full name of a <User> instance."""
-        return f"{self.first_name} {self.last_name}"
+        if len(self.first_name) <= 0 or len(self.last_name) <= 0:
+            full_name = self.username
+        else:
+            full_name = f"{self.first_name} {self.last_name}"
+        return f"{full_name}"
 
 
 class Address(BaseModel):
@@ -106,6 +110,15 @@ class Address(BaseModel):
         ]
 
     def __str__(self):
+        return "{}, {} - {}, {}".format(
+                    self.street,
+                    self.city,
+                    self.state,
+                    self.country
+                )
+
+    @property
+    def full_address(self):
         return "{}, {} - {}, {}".format(
                     self.street,
                     self.city,
