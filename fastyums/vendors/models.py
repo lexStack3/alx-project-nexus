@@ -17,10 +17,10 @@ class Vendor(BaseModel):
     vendor_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False
     )
-    owner = models.OneToOneField(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='vendor_profile'
+        related_name='vendors'
     )
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
