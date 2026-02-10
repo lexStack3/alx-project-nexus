@@ -159,6 +159,7 @@ def run_seed():
     for order in orders:
         Payment.objects.create(
             order=order,
+            user=order.user,
             tx_ref=f"TX-{order.order_id}",
             amount=order.total_price,
             status=random.choice([Payment.PaymentStatus.SUCCESSFUL, Payment.PaymentStatus.PENDING])
