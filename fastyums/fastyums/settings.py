@@ -84,11 +84,6 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:9000",
-]
-
 ROOT_URLCONF = 'fastyums.urls'
 
 TEMPLATES = [
