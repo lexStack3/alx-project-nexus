@@ -11,6 +11,9 @@ User = get_user_model()
 
 
 class IsAuthenticatedUser(BasePermission):
+    """
+    Grants access to admin users.
+    """
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated
 
@@ -79,8 +82,3 @@ class IsCustomer(BasePermission):
             request.user.is_authenticated and
             request.user.role == User.Role.CUSTOMER
         )
-
-
-class ReadOnly(BasePermission):
-    def has_permission(self, request, view):
-        return request.method in SAFE_METHODS
