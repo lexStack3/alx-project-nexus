@@ -43,3 +43,7 @@ class Delivery(BaseModel):
         String representation for a <Delivery> instance.
         """
         return f"Delivering of order: {self.order}"
+
+    @property
+    def owner(self):
+        return self.order.iser
