@@ -21,6 +21,14 @@ class Category(BaseModel):
         """
         return self.name
 
+    class Meta:
+        indexes = [
+            models.Index(
+                fields=['name'],
+                name='category_name_idx'
+            )
+        ]
+
 
 class Product(BaseModel):
     """
@@ -48,3 +56,17 @@ class Product(BaseModel):
         """
         return f"Name: {self.name} - Qty: {self.quantity}"
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['vendor', 'name'],
+                name='unique_product_per_vendor'
+            )
+        ]
+        indexes = [
+            models.Index(
+                fields=['name'],
+                name='product_name_idx'
+            )
+        ]
+        ordering = ['name']
