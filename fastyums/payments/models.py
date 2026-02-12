@@ -44,3 +44,16 @@ class Payment(BaseModel):
         String representation of a <Payment> instance.
         """
         return f"Payment: {self.tx_ref} - {self.status}"
+
+    def save(self, *args, **kwargs):
+        if not self.amount:
+            self.amount = self.order.total_price
+        super().save(*args, **kwargs)
+
+    class Meta:
+        indexes = [
+            models.Index(
+                fields=['status'],
+                name='payment_status_idx'
+            )
+        ]
