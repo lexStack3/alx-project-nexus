@@ -1,7 +1,9 @@
 from rest_framework import serializers
-from categories.models import Category, Product
 
+from accounts.models import User
+from categories.models import Category, Product
 from vendors.models import Vendor
+
 
 
 class ProductCategorySerializer(serializers.ModelSerializer):
@@ -29,8 +31,14 @@ class CategorySerializer(serializers.ModelSerializer):
             ]
 
 
+class VendorOwnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['user_id', 'full_name', 'email']
+
+
 class VendorProductSerializer(serializers.ModelSerializer):
-    owner = serializers.CharField(source='owner.username')
+    owner = VendorOwnerSerializer(read_only=True)
 
     class Meta:
         model = Vendor
@@ -45,8 +53,9 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'product_id', 'vendor',
-            'category', 'name', 'price', 'quantity',
+            'product_id', 'vendor', 'category',
+            'name', 'price', 'quantity',
             'available', 'created_at', 'updated_at'
         ]
+        read_only_fields = ['product_id', 'vendor']
 

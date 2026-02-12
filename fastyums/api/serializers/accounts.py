@@ -14,7 +14,7 @@ class AddressSerializer(serializers.ModelSerializer):
         read_only_fields = ['address_id']
 
 
-class UserSerializer(serializers.ModelSerializer):
+class AdminUserSerializer(serializers.ModelSerializer):
     addresses = AddressSerializer(many=True, read_only=True)
     password = serializers.CharField(
         write_only=True,
@@ -31,9 +31,9 @@ class UserSerializer(serializers.ModelSerializer):
             'user_id', 'email', 'username',
             'password', 'password2',
             'first_name', 'last_name', 'phone',
-            'role', 'addresses', 'vendors', 'payments'
+            'role', 'addresses', 'vendor', 'payments'
         ]
-        read_only_fields = ['user_id', 'addresses', 'payments']
+        read_only_fields = ['user_id', 'vendor', 'addresses', 'payments']
 
     def validate(self, attrs):
         """Validates that passwords match."""
@@ -52,3 +52,15 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+class UserSerializer(AdminUserSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'user_id', 'email', 'password', 'password2',
+            'first_name', 'last_name', 'phone', 'role',
+            'addresses', 'vendor', 'payments'
+        ]
+        read_only_fields = [
+            'user_id', 'vendor', 'addresses', 'role', 'payments'
+        ]

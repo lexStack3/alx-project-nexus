@@ -41,3 +41,8 @@ class DeliverySerializer(serializers.ModelSerializer):
             'delivery_id', 'courier', 'order',
             'status', 'estimated_delivery_time', 'delivered_at'
         ]
+
+class DeliveryUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Delivery
+        fields = ['status', 'estimated_delivery_time', 'delivery_at']

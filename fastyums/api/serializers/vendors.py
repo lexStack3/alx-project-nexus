@@ -25,3 +25,4 @@ class VendorSerializer(serializers.ModelSerializer):
             'vendor_id', 'owner', 'name',
             'description', 'addresses'
         ]
+        read_only_fields = ['owner', 'vendor_id']
