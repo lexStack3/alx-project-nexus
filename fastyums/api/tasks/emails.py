@@ -18,7 +18,7 @@ def send_order_confirmation_email(order_id, email, full_name):
     Thanks for choosing FastYums.
     """
 
-    send_email(
+    send_mail(
         subject,
         message,
         settings.DEFAULT_FROM_EMAIL,
