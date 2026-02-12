@@ -69,6 +69,10 @@ class User(AbstractUser, BaseModel):
             full_name = f"{self.first_name} {self.last_name}"
         return f"{full_name}"
 
+    @property
+    def owner(self):
+        return self
+
 
 class Address(BaseModel):
     """
