@@ -1,0 +1,30 @@
+POST http://localhost:8000/api/v1/auth/token/ HTTP/1.1
+content-type: application/json
+
+{
+    "email": "admin@fastyums.com",
+    "password": "adminpass"
+}
+
+###
+
+POST http://localhost:8000/api/v1/auth/token/ HTTP/1.1
+content-type: application/json
+
+{
+    "email": "customer.1@fastyums.com",
+    "password": "customerpass"
+}
+
+###
+
+POST http://localhost:8000/api/v1/auth/token/refresh/ HTTP/1.1
+content-type: application/json
+
+{
+   "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3MTQxODYwNywiaWF0IjoxNzcwODEzODA3LCJqdGkiOiJlZWE0MjAwYmYwNmY0YmY5OTk2N2IzYjQ2Mjk1NWFhZSIsInVzZXJfaWQiOiI0OThmMWE2NS1lMGY4LTRhNDYtOGQ0YS00YzVmZDZlY2UyYjcifQ.xODHnodU0sZ77IGD1Cxp712Bd6weI_tmrWJggkEPiQo" 
+}
+
+###
+GET http://localhost:8000/api/v1/users/498f1a65-e0f8-4a46-8d4a-4c5fd6ece2b7 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcwODI2MjI0LCJpYXQiOjE3NzA4MjQ0MjQsImp0aSI6IjRlMTRlYmU0NWIyYTRlOWI5YWNkNGViYjUwZjc5MmQyIiwidXNlcl9pZCI6IjQ5OGYxYTY1LWUwZjgtNGE0Ni04ZDRhLTRjNWZkNmVjZTJiNyJ9.aNlRqPjOJPf5wGfCXrvcg4xVzXlvSapN6WTcLNv9rnk
