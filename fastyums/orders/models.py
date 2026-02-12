@@ -41,6 +41,18 @@ class Order(BaseModel):
         """
         return f"{self.order_id} - ₦{self.total_price}"
 
+    class Meta:
+        indexes = [
+            models.Index(
+                fields=['status'],
+                name='order_status_idx'
+            )
+        ]
+
+    @property
+    def owner(self):
+        return self.user
+
 
 class OrderItem(BaseModel):
     """
