@@ -17,10 +17,10 @@ class Vendor(BaseModel):
     vendor_id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False
     )
-    owner = models.ForeignKey(
+    owner = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        related_name='vendors'
+        related_name='vendor'
     )
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -31,3 +31,11 @@ class Vendor(BaseModel):
         String representation of a <Vendor> instance.
         """
         return self.name
+
+    class Meta:
+        indexes = [
+            models.Index(
+                fields=['name'],
+                name='vendor_name_idx'
+            )
+        ]
