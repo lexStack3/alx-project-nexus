@@ -70,3 +70,7 @@ class Product(BaseModel):
             )
         ]
         ordering = ['name']
+
+    @property
+    def owner(self):
+        return self.vendor.owner
