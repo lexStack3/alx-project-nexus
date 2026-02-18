@@ -1,6 +1,12 @@
-from rest_framework import viewsets
+from django.contrib.contenttypes.models import ContentType
+from rest_framework import viewsets, status
 from rest_framework.permissions import AllowAny
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 from vendors.models import Vendor
+
+from api.serializers.accounts import AddressSerializer
 from api.serializers.vendors import VendorSerializer
 
 from api.permissions import IsOwner, IsVendor
@@ -31,5 +37,30 @@ class VendorViewSet(viewsets.ModelViewSet):
 
         return super().get_permissions()
 
-    def perform_create(self, serialzier):
+    def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+    @action(detail=True, methods=['post'], url_path='addresses')
+    def address(self, request, vendor_id=None):
+        vendor = self.get_object()
+
+        serializer = AddressSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        content_type = ContentType.objects.get_for_model(vendor)
+
+        serializer.save(
+            content_type=content_type,
+            object_id=vendor.vendor_id
+        )
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @address.mapping.get
+    def list_address(self, request, vendor_id=None):
+        vendor = self.get_object()
+        addresses = vendor.addresses.all()
+
+        serializer = AddressSerializer(addresses, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
