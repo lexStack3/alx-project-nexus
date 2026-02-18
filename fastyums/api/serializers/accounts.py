@@ -37,10 +37,13 @@ class AdminUserSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         """Validates that passwords match."""
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({
-                'password': "Passwords do not match."
-            })
+        password = attrs.get('password', None)
+
+        if password:
+            if attrs['password'] != attrs['password2']:
+                raise serializers.ValidationError({
+                    'password': "Passwords do not match."
+                })
         return attrs
 
     def create(self, validated_data):
@@ -53,11 +56,29 @@ class AdminUserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+    def update(self, user, validated_data):
+        password = validated_data.pop('password', None)
+        password2 = validated_data.pop('password2', None)
+
+        for attr, value in validated_data.items():
+            setattr(user, attr, value)
+
+        if password:
+            if password != password2:
+                raise serializers.ValidationError({
+                    'password': "Passwords do not match."
+                })
+            user.set_password(password)
+
+        user.save()
+        return user
+            
+
 class UserSerializer(AdminUserSerializer):
     class Meta:
         model = User
         fields = [
-            'user_id', 'email', 'password', 'password2',
+            'user_id', 'email', 'username', 'password', 'password2',
             'first_name', 'last_name', 'phone', 'role',
             'addresses', 'vendor', 'payments'
         ]
