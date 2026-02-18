@@ -12,7 +12,7 @@ from django.contrib.contenttypes.fields import (
 from core.models import BaseModel
 
 
-STATES = tuple((state.code, state.name) for state in
+STATES = tuple((state.name, state.name) for state in
                pycountry.subdivisions.get(country_code='NG'))
 
 
