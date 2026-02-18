@@ -1,12 +1,13 @@
 from rest_framework import viewsets
 from rest_framework.permissions import (
-    IsAdminUser, SAFE_METHODS
+    IsAdminUser, AllowAny, SAFE_METHODS
 )
 
 from courier.models import Delivery
 from accounts.models import User
 from api.serializers.courier import (
-    DeliverySerializer, DeliveryUpdateSerializer
+    DeliverySerializer, DeliveryUpdateSerializer,
+    DeliveryCreateSerializer
 )
 from api.permissions import (
     IsCourier, IsOwner, IsAuthenticatedUser
@@ -40,6 +41,8 @@ class DeliveryViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ['update', 'partial_update']:
             return DeliveryUpdateSerializer
+        elif self.action == 'create':
+            return DeliveryCreateSerializer
         return DeliverySerializer
 
 
