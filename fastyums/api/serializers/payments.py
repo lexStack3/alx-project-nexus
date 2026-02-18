@@ -20,11 +20,21 @@ class PaymentSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, attrs):
+        request = self.context['request']
         order = attrs.get('order')
-        if Payment.objects.filter(order=order).exists():
-            raise serializers.ValidationError(
-                "A payment for this order already exists."
-            )
+
+        if order:
+            if order.user != request.user:
+                raise serializers.ValidationError(
+                    "You cannot pay for another user's order."
+                )
+
+            if Payment.objects.filter(order=order).exists():
+                raise serializers.ValidationError(
+                    "A payment for this order already exists."
+                )
+
+        return attrs
 
     def create(self, validated_data):
         user = self.context['request'].user
