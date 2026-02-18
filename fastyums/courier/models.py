@@ -46,4 +46,4 @@ class Delivery(BaseModel):
 
     @property
     def owner(self):
-        return self.order.iser
+        return self.order.user
