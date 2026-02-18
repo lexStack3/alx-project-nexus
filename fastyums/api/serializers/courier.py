@@ -42,6 +42,19 @@ class DeliverySerializer(serializers.ModelSerializer):
             'status', 'estimated_delivery_time', 'delivered_at'
         ]
 
+class DeliveryCreateSerializer(serializers.ModelSerializer):
+    courier = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.filter(role=User.Roles.COURIER)
+    )
+    order = serializers.PrimaryKeyRelatedField(
+        queryset=Order.objects.filter(status=Delivery.DeliveryStatus.PENDING)
+    )
+
+    class Meta:
+        model = Delivery
+        fields = ['delivery_id', 'courier', 'order']
+
+
 class DeliveryUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Delivery
