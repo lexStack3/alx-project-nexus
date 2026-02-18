@@ -1,5 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.permissions import (
     AllowAny, IsAdminUser
 )
@@ -11,9 +13,10 @@ from api.serializers.accounts import (
     AdminUserSerializer,
     AddressSerializer
 )
+from api.serializers.vendors import VendorSerializer
 from api.permissions import (
     IsOwner, IsAuthenticatedUser,
-    IsVendor, IsCourier
+    IsVendor, IsCourier, IsAdminOrVendor
 )
 
 from api.filters.accounts import UserFilter, AddressFilter
@@ -53,6 +56,52 @@ class UserViewSet(viewsets.ModelViewSet):
             return [IsAuthenticatedUser(), IsOwner()]
 
         return super().get_permissions()
+
+    @action(detail=True, methods=['post'], url_path='addresses')
+    def address(self, request, user_id=None):
+        user = self.get_object()
+
+        serializer = AddressSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        content_type = ContentType.objects.get_for_model(user)
+
+        serializer.save(
+            content_type=content_type,
+            object_id=user.user_id
+        )
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @address.mapping.get
+    def list_addresses(self, request, user_id=None):
+        user = self.get_object()
+        addresses = user.addresses.all()
+
+        serializer = AddressSerializer(addresses, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(
+        detail=False,
+        methods=['get'],
+        permission_classes=[AllowAny],
+        url_path='vendors'
+    )
+    def list_vendors(self, request):
+        vendors = Vendor.objects.all()
+        serializer = VendorSerializer(vendors, many=True)
+        return Response(serializer.data)
+
+    @action(
+        detail=False,
+        methods=['get'],
+        permission_classes=[IsAdminOrVendor],
+        url_path='couriers'
+    )
+    def list_courier(self, request):
+        couriers = User.objects.filter(role=User.Roles.COURIER)
+        serializer = UserSerializer(couriers, many=True)
+        return Response(serializer.data)
 
 
 class AddressViewSet(viewsets.ModelViewSet):
