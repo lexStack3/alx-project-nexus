@@ -109,7 +109,7 @@ def run_seed():
                 name=f"{user.username} Address {n+1}",
                 street=f"{random.randint(100,999)} Main St",
                 city="Calabar",
-                state="NG-CR",
+                state="Cross River",
                 country="Nigeria",
                 is_default=(n==0)
             )
@@ -121,7 +121,7 @@ def run_seed():
             name=f"{vendor.name} HQ",
             street=f"{random.randint(100,999)}, Vendor St",
             city="Calabar",
-            state="NG-CR",
+            state="Cross River",
             country="Nigeria",
             is_default=True
         )
