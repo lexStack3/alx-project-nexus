@@ -19,8 +19,8 @@ from .views.vendors import VendorViewSet
 
 router = routers.DefaultRouter()
 
-router.register('users', UserViewSet, basename='user')
-user_router = routers.NestedDefaultRouter(router, r'users', lookup='user')
+router.register('accounts', UserViewSet, basename='account')
+user_router = routers.NestedDefaultRouter(router, r'accounts', lookup='account')
 user_router.register(r'addresses', AddressViewSet, basename='user-address')
 user_router.register(r'vendors', VendorViewSet, basename='vendors')
 
