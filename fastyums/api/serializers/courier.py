@@ -21,7 +21,7 @@ class CourierUserSerializer(serializers.ModelSerializer):
         read_only = True
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderCourierSerializer(serializers.ModelSerializer):
     receiver = OrderReceiverSerializer(source='user', read_only=True)
 
     class Meta:
@@ -33,7 +33,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class DeliverySerializer(serializers.ModelSerializer):
     courier = CourierUserSerializer(read_only=True)
-    order = OrderSerializer(read_only=True)
+    order = OrderCourierSerializer(read_only=True)
 
     class Meta:
         model = Delivery
@@ -58,4 +58,4 @@ class DeliveryCreateSerializer(serializers.ModelSerializer):
 class DeliveryUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Delivery
-        fields = ['status', 'estimated_delivery_time', 'delivery_at']
+        fields = ['status', 'estimated_delivery_time', 'delivered_at']
