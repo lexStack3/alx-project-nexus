@@ -1,5 +1,8 @@
 <nav style="font-size: 24px;">
     <ul>
+        <li><a href="/api/v1/">API</a></li>
+        <li><a href="{% url 'schema-swagger-ui' %}">Swagger API Documentation</a></li>
+        <li><a href="{% url 'schema-redoc' %}">Redoc Documentation</a></li>
         {% if user.is_authenticated %}
             <li><a href="{% url 'account_email' %}">Emails</a></li>
             <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
